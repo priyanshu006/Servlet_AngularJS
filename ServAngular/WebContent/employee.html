@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<script type="text/javascript">
+
+var app = angular.module("employeeApp",[]);
+app.controller("employeeController",function($scope,$http){
+	
+	$http({
+		url:"EmployeeController",
+		method:"GET"
+	
+	}).then(function(response){
+		$scope.employeeList=response.data;
+		console.log(response);
+	},function(response){
+		console.log(response);
+	});
+	
+});
+
+</script>
+</head>
+<body ng-app="employeeApp" ng-controller="employeeController">
+	<h1 align="center">Servlet Angular Integration</h1>
+	<hr/>
+	<input type="text" ng-model="searchText" />
+	
+	<table class="table table-bordered">
+		<tr>
+			<th>EMP ID</th>
+			<th>NAME</th>
+			<th>SALARY</th>
+			<th>DESIGNATION</th>
+			<th>ADDRESS</th>
+		</tr>
+		<tr ng-repeat="emp in employeeList | filter:{id:searchText}">
+			<td>{{emp.id}}</td>
+			<td>{{emp.name}}</td>
+			<td>{{emp.salary}}</td>
+			<td>{{emp.designation}}</td>
+			<td>{{emp.address}}</td>
+		</tr>
+		
+	</table>
+	
+
+</body>
+</html>
